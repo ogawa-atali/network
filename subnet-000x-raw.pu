@@ -1,0 +1,32 @@
+@startuml
+allowmixing
+
+node "0.0.0.0" as mainframe
+node "0.0.0.1" as 0_0_0_1
+node "0.0.0.2" as 0_0_0_2
+node "0.0.0.3" as 0_0_0_3
+
+storage r1
+hexagon "D(0.0.0.*)" as D_0_0_0_x
+mainframe -- "0" r1
+r1 "1" --> D_0_0_0_x
+
+storage r2
+D_0_0_0_x --> "0" r2
+hexagon "D(0.0.0.1)" as D_0_0_0_1
+r2 "1" --> D_0_0_0_1
+D_0_0_0_1 --> 0_0_0_1
+
+storage r3
+r2 "2" -- "0" r3
+hexagon "D(0.0.0.2)" as D_0_0_0_2
+r3 "1" --> D_0_0_0_2
+D_0_0_0_2 --> 0_0_0_2
+
+r3 "2" -- 0_0_0_3
+
+component outbound #GreenYellow
+r1 "2" -- outbound
+
+
+@enduml
