@@ -29,7 +29,6 @@ r1 "2" -- outbound
 'reverse
 hexagon "D(0.0.0.0)" as D_0_0_0_0 #LightBlue
 r1 "0" --> D_0_0_0_0
-D_0_0_0_0 --> mainframe
 
 hexagon blocker #LightBlue
 0_0_0_2 --> blocker
@@ -37,6 +36,12 @@ blocker <--> D_0_0_0_2
 
 'collision
 storage rc1 #Coral
+rc1 "1" <-- D_0_0_0_0
+hexagon "all" as all1 #Coral
+rc1 "2" --> all1
 
+hexagon "D(0.0.0.0)" as D_0_0_0_0_2 #Coral
+rc1 "0" --> D_0_0_0_0_2
+D_0_0_0_0_2 --> mainframe
 
 @enduml
