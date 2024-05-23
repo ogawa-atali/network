@@ -21,19 +21,26 @@ hexagon "D(0.a.3.*)" as D_0a3x
 hexagon back_all
 
 hexagon "D(0.a.0.*)" as D_0a0x_2
+hexagon "M(0.a.0.*)" as M_0a0x
+hexagon "M(0.a.*.*)" as M_0axx
+hexagon "D(0.a.3.*)" as D_0a3x_2
 
-outbound -- "0" r1
+outbound -- M_0axx
 
+
+r1 "0" --> M_0axx
 r1 "1" --> D_0a0x
 r1 "2" --> D_0a0x_2
 
 D_0a0x_2 -- "0" r2
 r2 "1" --> D_0a1x
-r2 "2" -- "0" r3
+r2 "2" --> M_0a0x
 
+r3 "0" -- M_0a0x
 r3 "1" --> D_0a2x
-r3 "2" -- "0" r4
+r3 "2" --> D_0a3x_2
 
+r4 "0" -- D_0a3x_2
 r4 "1" --> D_0a3x
 r4 "2" --> back_all
 
