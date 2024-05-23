@@ -1,0 +1,41 @@
+@startuml subnet-0axx
+
+component outbound #LightGreen
+
+node "sub 0.a.0.*" as sub_0a0x #Yellow
+node "sub 0.a.1.*" as sub_0a1x #Yellow
+node "sub 0.a.2.*" as sub_0a2x #Yellow
+node "sub 0.a.3.*" as sub_0a3x #Yellow
+
+storage r1
+storage r2
+storage r3
+storage r4
+storage r5
+
+hexagon "D(0.a.0.*)" as D_0a0x
+hexagon "D(0.a.1.*)" as D_0a1x
+hexagon "D(0.a.2.*)" as D_0a2x
+hexagon "D(0.a.3.*)" as D_0a3x
+
+hexagon back_all
+
+outbound -- "0" r1
+r1 "1" --> D_0a0x
+r1 "2" -- "0" r2
+
+r2 "1" --> D_0a1x
+r2 "2" -- "0" r3
+
+r3 "1" --> D_0a2x
+r3 "2" -- "0" r4
+
+r4 "1" --> D_0a3x
+r4 "2" --> back_all
+
+D_0a0x -- sub_0a0x
+D_0a1x -- sub_0a1x
+D_0a2x -- sub_0a2x
+D_0a3x -- sub_0a3x
+
+@enduml
