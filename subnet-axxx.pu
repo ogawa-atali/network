@@ -1,0 +1,64 @@
+@startuml subnet-0axx
+
+component outbound #LightGreen
+
+node "sub a.0.*.*" as sub_a0xx #Yellow
+node "sub a.1.*.*" as sub_a1xx #Yellow
+node "sub a.2.*.*" as sub_a2xx #Yellow
+node "sub a.3.*.*" as sub_a3xx #Yellow
+
+storage r1
+storage r2
+storage r3
+storage r4
+storage r5
+
+hexagon "D(a.0.*.*)" as D_a0xx
+hexagon "D(a.1.*.*)" as D_a1xx
+hexagon "D(a.2.*.*)" as D_a2xx
+hexagon "D(a.3.*.*)" as D_a3xx
+
+hexagon back_all
+
+' a1xx -> a0xxパケットが外に流出するのを防ぐ 
+hexagon "M(a.*.*.*)" as M_axxx #LightBlue
+' a0xx -> outboundが無駄な部分に流れるのを防ぐ
+hexagon "D(a.*.*.*)" as D_axxx #LightBlue
+' a1xx -> a0xxパケットが無駄な部分に流れるのを防ぐ  
+hexagon "M(a.0.*.*)" as M_a0xx #LightBlue
+' a2xx -> !(a3xx)のパケットが無駄な部分に流れるのを防ぐ
+hexagon "D(a.3.*.*)" as D_a3xx_2 #LightBlue
+' a2xx -> a1xxのパケットが無駄な部分に流れるのを防ぐ
+hexagon "M(a.1.*.*)" as M_a1xx #LightBlue
+' a3xx -> a2xxのパケットが無駄な部分に流れるのを防ぐ
+hexagon "M(a.2.*.*)" as M_a2xx #LightBlue
+
+outbound -- M_axxx
+
+
+r1 "0" --> M_axxx
+r1 "1" --> D_a0xx
+r1 "2" --> D_axxx
+
+M_a1xx -- D_axxx
+
+r2 "0" --> M_a1xx
+r2 "1" --> D_a1xx
+r2 "2" --> M_a0xx
+
+M_a0xx -- M_a2xx
+
+r3 "0" --> M_a2xx
+r3 "1" --> D_a2xx
+r3 "2" --> D_a3xx_2
+
+r4 "0" -- D_a3xx_2
+r4 "1" --> D_a3xx
+r4 "2" --> back_all
+
+D_a0xx -- sub_a0xx
+D_a1xx -- sub_a1xx
+D_a2xx -- sub_a2xx
+D_a3xx -- sub_a3xx
+
+@enduml
