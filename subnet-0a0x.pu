@@ -10,7 +10,6 @@ node "0.a.0.3" as 0a03 #Yellow
 storage r1
 storage r2
 storage r3
-storage r4
 
 hexagon "D(0.a.0.0)" as D_0a00
 hexagon "D(0.a.0.1)" as D_0a01
@@ -18,19 +17,34 @@ hexagon "D(0.a.0.2)" as D_0a02
 hexagon "D(0.a.0.3)" as D_0a03
 hexagon "back_all" as back_all
 
-outbound -- "0" r1
+'0->外パケットがネットワーク内に入るのを防ぐ
+hexagon "D(0.a.0.*)" as D_0a0x  #LightBlue
+'1->外パケットがネットワーク内に入るのを防ぐ
+hexagon "D(0.a.0.*)2" as D_0a0x_2 #LightBlue
+'1->0パケットが無駄な部分を流れるのを防ぐ
+hexagon "M(0.a.0.0)" as M_0a00 #LightBlue
+'2->0パケットが無駄な部分を流れるのを防ぐ
+hexagon "M(0.a.0.0)2" as M_0a00_2 #LightBlue
+'2->1, 3->1パケットが外に出ていくのを防ぐ
+hexagon "M(0.a.0.1)" as M_0a01 #LightBlue
 
+outbound -- M_0a00_2
+
+r1 "0" --> M_0a00_2
 r1 "1" --> D_0a00
-r1 "2" -- "0" r2
+r1 "2" --> D_0a0x
 
+M_0a01 -- D_0a0x
+
+r2 "0" --> M_0a01
 r2 "1" --> D_0a01
-r2 "2" -- "0" r3
+r2 "2" --> D_0a0x_2
 
+D_0a0x_2 --> M_0a00
+
+r3 "0" -- M_0a00
 r3 "1" --> D_0a02
-r3 "2" -- "0" r4
-
-r4 "1" --> D_0a03
-r4 "2" --> back_all
+r3 "2" --> D_0a03
 
 D_0a00 -- 0a00
 D_0a01 -- 0a01
