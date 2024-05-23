@@ -20,9 +20,13 @@ hexagon "D(0.a.3.*)" as D_0a3x
 
 hexagon back_all
 
-hexagon "D(0.a.*.*)" as D_00xx #LightBlue
-hexagon "M(0.a.0.*)" as M_0a0x #LightBlue
+' 0a1x -> 0a0xパケットが外に流出するのを防ぐ 
 hexagon "M(0.a.*.*)" as M_0axx #LightBlue
+' 0a0x -> outboundが無駄な部分に流れるのを防ぐ
+hexagon "D(0.a.*.*)" as D_0axx #LightBlue
+' 0a1x -> 0a0xパケットが無駄な部分に流れるのを防ぐ  
+hexagon "M(0.a.0.*)" as M_0a0x #LightBlue
+' 0a2x -> !(0a3x)のパケットが無駄な部分に流れるのを防ぐ
 hexagon "D(0.a.3.*)" as D_0a3x_2 #LightBlue
 
 outbound -- M_0axx
@@ -30,9 +34,9 @@ outbound -- M_0axx
 
 r1 "0" --> M_0axx
 r1 "1" --> D_0a0x
-r1 "2" -- D_00xx
+r1 "2" -- D_0axx
 
-r2 "0" --> D_00xx
+r2 "0" --> D_0axx
 r2 "1" --> D_0a1x
 r2 "2" --> M_0a0x
 
