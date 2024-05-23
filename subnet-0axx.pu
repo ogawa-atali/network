@@ -20,10 +20,14 @@ hexagon "D(0.a.3.*)" as D_0a3x
 
 hexagon back_all
 
-outbound -- "0" r1
-r1 "1" --> D_0a0x
-r1 "2" -- "0" r2
+hexagon "D(0.a.0.*)" as D_0a0x_2
 
+outbound -- "0" r1
+
+r1 "1" --> D_0a0x
+r1 "2" --> D_0a0x_2
+
+D_0a0x_2 -- "0" r2
 r2 "1" --> D_0a1x
 r2 "2" -- "0" r3
 
