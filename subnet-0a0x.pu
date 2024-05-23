@@ -27,6 +27,8 @@ hexagon "M(0.a.0.0)" as M_0a00 #LightBlue
 hexagon "M(0.a.0.0)2" as M_0a00_2 #LightBlue
 '2->1, 3->1パケットが外に出ていくのを防ぐ
 hexagon "M(0.a.0.1)" as M_0a01 #LightBlue
+'3->2パケットが外に出ていくのを防ぐ
+hexagon "M(0.a.0.2)" as M_0a02 #LightBlue
 
 outbound -- M_0a00_2
 
@@ -41,8 +43,9 @@ r2 "1" --> D_0a01
 r2 "2" --> D_0a0x_2
 
 D_0a0x_2 --> M_0a00
+M_0a02 -- M_0a00
 
-r3 "0" -- M_0a00
+r3 "0" --> M_0a02
 r3 "1" --> D_0a02
 r3 "2" --> D_0a03
 
